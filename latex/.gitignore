@@ -6,3 +6,7 @@
 *.run.xml
 *.tex.bbl
 *.tex.blg
+*.fls
+*.synctex.gz
+*.fdb_latexmk
+_minted
