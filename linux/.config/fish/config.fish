@@ -1,5 +1,3 @@
-cd ~
-
 # Remove fish greeting
 set fish_greeting
 
