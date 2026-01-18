@@ -1,10 +1,10 @@
 -- keys.lua
 local function map(mode, lhs, rhs, opts)
-	local options = { noremap = true, silent = true }
-	if opts then
-		options = vim.tbl_extend("force", options, opts)
-	end
-	vim.api.nvim_set_keymap(mode, lhs, rhs, options)
+    local options = { noremap = true, silent = true }
+    if opts then
+        options = vim.tbl_extend("force", options, opts)
+    end
+    vim.api.nvim_set_keymap(mode, lhs, rhs, options)
 end
 
 -- Leader key
@@ -13,9 +13,9 @@ vim.g.mapleader = " "
 -- Rename current file
 vim.keymap.set("n", "<leader>m", function()
     -- Get current file path
-    local current_file = vim.fn.expand("%:p")
+    local current_file = vim.fn.expand "%:p"
     if current_file == "" then
-        print("No file in buffer")
+        print "No file in buffer"
         return
     end
 
@@ -28,7 +28,7 @@ vim.keymap.set("n", "<leader>m", function()
 
         -- Update the buffer
         vim.cmd("edit " .. vim.fn.fnameescape(new_name))
-        vim.cmd("bd #")  -- Remove old buffer
+        vim.cmd "bd #" -- Remove old buffer
 
         print("Renamed: " .. current_file .. " -> " .. new_name)
     end

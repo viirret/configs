@@ -2,22 +2,22 @@
 local M = {}
 
 M.clear_lsp_log_if_needed = function()
-	local log_path = vim.lsp.get_log_path()
+    local log_path = vim.lsp.get_log_path()
 
-	if log_path and vim.fn.filereadable(log_path) == 1 then
-		local max_size = 50000 -- 50 KB
+    if log_path and vim.fn.filereadable(log_path) == 1 then
+        local max_size = 50000 -- 50 KB
 
-		local file_size = vim.fn.getfsize(log_path)
-		if file_size > max_size then
-			-- Delete the log file if it exceeds the max size.
-			os.remove(log_path)
-			print("LSP log file exceeded size limit and was deleted.")
-		else
-			-- Clear the log file every time Neovim is started.
-			os.remove(log_path)
-			print("LSP log file deleted on Neovim startup.")
-		end
-	end
+        local file_size = vim.fn.getfsize(log_path)
+        if file_size > max_size then
+            -- Delete the log file if it exceeds the max size.
+            os.remove(log_path)
+            print "LSP log file exceeded size limit and was deleted."
+        else
+            -- Clear the log file every time Neovim is started.
+            os.remove(log_path)
+            print "LSP log file deleted on Neovim startup."
+        end
+    end
 end
 
 return M

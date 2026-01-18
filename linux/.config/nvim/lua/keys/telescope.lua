@@ -1,4 +1,4 @@
-local builtin = require("telescope.builtin")
+local builtin = require "telescope.builtin"
 
 -- Find file (from nvim launch dir)
 vim.keymap.set("n", "<leader>ff", builtin.find_files, { noremap = true, silent = true })
@@ -14,8 +14,8 @@ vim.keymap.set("n", "<leader>fh", builtin.help_tags, { noremap = true, silent = 
 
 -- Create a new file
 vim.keymap.set("n", "<leader>fe", function()
-	require("telescope").extensions.file_browser.file_browser({
-		path = vim.loop.cwd(), -- Nvim launch path
-		select_buffer = true,
-	})
+    require("telescope").extensions.file_browser.file_browser {
+        path = vim.fn.getcwd(), -- Nvim launch path
+        select_buffer = true,
+    }
 end, { noremap = true, silent = true, desc = "Telescope File Explorer" })

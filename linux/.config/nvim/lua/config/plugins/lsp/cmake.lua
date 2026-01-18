@@ -1,9 +1,9 @@
-local builder = require("config.plugins.lsp.lspbuilder")
+local builder = require "config.plugins.lsp.lspbuilder"
 
 local M = {}
 
 function M.setup(capabilities, on_attach)
-    builder.build({
+    builder.build {
         name = "cmake",
         cmd = { "cmake-language-server" },
         filetypes = { "cmake", "CMakeLists.txt" },
@@ -13,7 +13,7 @@ function M.setup(capabilities, on_attach)
             "CMakeLists.txt",
             ".git",
             "build",
-            "CMakePresets.json"
+            "CMakePresets.json",
         },
         settings = {
             cmake = {
@@ -21,9 +21,9 @@ function M.setup(capabilities, on_attach)
                 configureOnEdit = false,
                 buildDirectory = "build",
                 generator = nil,
-            }
-        }
-    })
+            },
+        },
+    }
 end
 
 return M

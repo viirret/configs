@@ -1,3 +1,3 @@
 return {
-	"romgrk/barbar.nvim",
+    "romgrk/barbar.nvim",
 }

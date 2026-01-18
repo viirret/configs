@@ -1,11 +1,10 @@
-
 -- lua/lsp/latex.lua
-local builder = require("config.plugins.lsp.lspbuilder")
+local builder = require "config.plugins.lsp.lspbuilder"
 
 local M = {}
 
 function M.setup(capabilities, on_attach)
-    builder.build({
+    builder.build {
         name = "texlab",
         cmd = { "texlab" },
         filetypes = { "tex", "bib" },
@@ -29,7 +28,7 @@ function M.setup(capabilities, on_attach)
                 },
             },
         },
-    })
+    }
 end
 
 return M
