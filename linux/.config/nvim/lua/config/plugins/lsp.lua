@@ -12,5 +12,6 @@ return {
         require("config.plugins.lsp.ts").setup(capabilities, on_attach)
         require("config.plugins.lsp.cmake").setup(capabilities, on_attach)
         require("config.plugins.lsp.tex").setup(capabilities, on_attach)
+        require("config.plugins.lsp.go").setup(capabilities, on_attach)
     end,
 }

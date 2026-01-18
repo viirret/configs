@@ -7,6 +7,7 @@ return {
             formatters_by_ft = {
                 lua = { "stylua" },
                 python = { "black" },
+                go = { "gofumpt" },
                 javascript = { "prettier" },
                 typescript = { "prettier" },
                 javascriptreact = { "prettier" },
@@ -28,6 +29,9 @@ return {
 
             -- Formatter configuration
             formatters = {
+                gofumpt = {
+                    prepend_args = { "-extra" },
+                },
                 stylua = {
                     prepend_args = {},
                 },

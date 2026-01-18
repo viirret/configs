@@ -5,6 +5,7 @@ local M = {}
 local FORMATTER_AVAILABLE = {
     lua = vim.fn.executable "stylua" == 1,
     python = vim.fn.executable "black" == 1,
+    go = vim.fn.executable "gofumpt" == 1,
     javascript = vim.fn.executable "prettier" == 1,
     typescript = vim.fn.executable "prettier" == 1,
     json = vim.fn.executable "prettier" == 1,
