@@ -2,7 +2,7 @@ return {
     "neovim/nvim-lspconfig",
     config = function()
         local capabilities = require("cmp_nvim_lsp").default_capabilities()
-        local on_attach = require("keys.on_attach").on_attach
+        local on_attach = require("on_attach").on_attach
 
         require("config.plugins.lsp.lua").setup(capabilities, on_attach)
         require("config.plugins.lsp.python").setup(capabilities, on_attach)

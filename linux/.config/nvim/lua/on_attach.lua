@@ -1,3 +1,5 @@
+local lsp_keymaps = require "keys.lsp_keymaps"
+
 local M = {}
 
 local FORMATTER_AVAILABLE = {
@@ -17,13 +19,7 @@ local FORMATTER_AVAILABLE = {
 }
 
 function M.on_attach(client, bufnr)
-    local opts = { noremap = true, silent = true, buffer = bufnr }
-
-    -- LSP keymaps
-    vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-    vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
-    vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-    vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, opts)
+    lsp_keymaps.setup(bufnr)
 
     -- Disable LSP formatting for filetypes handled by conform
     local ft = vim.bo[bufnr].filetype
