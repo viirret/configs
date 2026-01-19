@@ -2,8 +2,9 @@ if not vim then
     error "This config must be run inside Neovim"
 end
 
--- Global keys
+-- Keys
 require "keys.keys"
+require "keys.barbar"
 
 -- Global options
 require "opts"
@@ -12,7 +13,7 @@ require "opts"
 require "config.lazy"
 
 local clear_lsp_log = require "clear_lsp_log"
-clear_lsp_log.clear_lsp_log_if_needed()
+clear_lsp_log.clear_lsp_log()
 
 vim.api.nvim_create_user_command("LspStatus", function()
     local clients = vim.lsp.get_clients { bufnr = 0 }
