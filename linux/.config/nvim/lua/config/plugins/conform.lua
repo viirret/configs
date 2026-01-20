@@ -25,6 +25,8 @@ return {
                 tex = { "latexindent" },
                 cmake = { "cmake_format" },
                 sh = { "shfmt" },
+                bash = { "shfmt" },
+                zsh = { "shfmt" },
             },
 
             -- Formatter configuration
