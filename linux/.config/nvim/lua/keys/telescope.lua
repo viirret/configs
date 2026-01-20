@@ -9,6 +9,9 @@ vim.keymap.set("n", "<leader>fg", builtin.live_grep, { noremap = true, silent = 
 -- Show buffers
 vim.keymap.set("n", "<leader>fb", builtin.buffers, { noremap = true, silent = true })
 
+-- Find references
+vim.keymap.set("n", "<leader>fr", builtin.lsp_references, { noremap = true, silent = true })
+
 -- Help tags
 vim.keymap.set("n", "<leader>fh", builtin.help_tags, { noremap = true, silent = true })
 
