@@ -9,6 +9,7 @@
     file
 
     # Programming
+    go
     python3
     openjdk
     sqlite

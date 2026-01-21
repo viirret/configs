@@ -11,22 +11,32 @@
   programs.neovim = {
     enable = true;
     extraPackages = with pkgs; [
+      # Telescope dependencies
       ripgrep
 
       # LSP servers
+      clang-tools
       nixd
       vtsls
       lua-language-server
       python3Packages.python-lsp-server
       rust-analyzer
       nil
-      clang-tools
       marksman
+      cmake-language-server
+      bash-language-server
+      texlab
+      gopls
 
-      # formatting
+      # Formatters
       black
       ruff
       stylua
+      prettier
+      cmake-format
+      gofumpt
+      rustfmt
+      shfmt
     ];
   };
 
