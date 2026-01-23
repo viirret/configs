@@ -5,7 +5,7 @@
     rm -rf "${config.home.homeDirectory}/.config/nvim"
   '';
   home.activation.linkNeovimConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    ln -sfn "${config.home.homeDirectory}/.dotfiles/linux/.config/nvim" "${config.home.homeDirectory}/.config"
+    ln -sfn "${config.home.homeDirectory}/configs/linux/.config/nvim" "${config.home.homeDirectory}/.config"
   '';
 
   programs.neovim = {

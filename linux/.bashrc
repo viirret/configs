@@ -2,8 +2,8 @@
 
 [[ $- != *i* ]] && return
 
-if [ -f ~/.dotfiles/scripts/shell_aliases.sh ]; then
-    source ~/.dotfiles/scripts/shell_aliases.sh
+if [ -f ~/configs/scripts/shell_aliases.sh ]; then
+    source ~/configs/scripts/shell_aliases.sh
 fi
 
 export PS1=' \[\e[0;35m\]\u\e[0;36m-> \e[0;32m\w\e[0;37m '
@@ -12,8 +12,7 @@ export PS1=' \[\e[0;35m\]\u\e[0;36m-> \e[0;32m\w\e[0;37m '
 set -o vi
 
 # mkdir + cd
-mkcd()
-{
+mkcd() {
     mkdir $1
     cd $1
 }
@@ -25,4 +24,3 @@ HISTSIZE=1000
 HISTFILESIZE=1000
 
 export DEBUGINFOD_URLS="https://debuginfod.archlinux.org"
-

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DOTFILES="$HOME/.dotfiles/linux"
+DOTFILES="$HOME/configs/linux"
 
 echo "=== Creating Symlinks ==="
 mkdir -p "$HOME/.config"
