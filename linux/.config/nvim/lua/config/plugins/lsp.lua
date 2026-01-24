@@ -14,5 +14,6 @@ return {
         require("config.plugins.lsp.tex").setup(capabilities, on_attach)
         require("config.plugins.lsp.go").setup(capabilities, on_attach)
         require("config.plugins.lsp.bash").setup(capabilities, on_attach)
+        require("config.plugins.lsp.markdown").setup(capabilities, on_attach)
     end,
 }
