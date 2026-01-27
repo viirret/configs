@@ -2,10 +2,10 @@
 
 {
   home.activation.removeOldNeovimConfig = lib.hm.dag.entryBefore [ "linkGeneration" ] ''
-    rm -rf "${config.home.homeDirectory}/.config/nvim"
+    rm -rf "${config.home.homeDirectory}/config/nvim"
   '';
   home.activation.linkNeovimConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    ln -sfn "${config.home.homeDirectory}/configs/linux/.config/nvim" "${config.home.homeDirectory}/.config"
+    ln -sfn "${config.home.homeDirectory}/configs/linux/config/nvim" "${config.home.homeDirectory}/.config"
   '';
 
   programs.neovim = {
