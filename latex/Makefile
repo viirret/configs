@@ -152,6 +152,33 @@ clean:
 	      $(AUX_DIR)/$(DOCUMENT).fls $(AUX_DIR)/$(DOCUMENT).nav \
 	      $(AUX_DIR)/$(DOCUMENT).snm $(AUX_DIR)/$(DOCUMENT).vrb
 
+# Clean all LaTeX auxiliary files in current directory
+clean-aux:
+	@echo "=== Cleaning ALL LaTeX auxiliary files in current directory ==="
+	@echo "Cleaning in current directory (excluding build directory):"
+	# Clean common LaTeX auxiliary files
+	rm -f *.aux *.log *.out *.toc *.lof *.lot
+	rm -f *.bbl *.blg *.bcf *.run.xml
+	rm -f *.synctex.gz *.fdb_latexmk *.fls
+	rm -f *.nav *.snm *.vrb *.xwm
+	rm -f *.glg *.glo *.gls *.ist *.acn *.acr *.alg
+	rm -f *.idx *.ilg *.ind
+	rm -f *.maf *.mtc *.mtc0 *.mtc1 *.mtc2 *.mtc3 *.mtc4 *.mtc5 *.mtc6 *.mtc7
+	rm -f *.mw
+	rm -f *.nlo
+	rm -f *.pyg
+	@echo "Also cleaning other common auxiliary files:"
+	rm -f *-blx.bib *.nav *.snm *.vrb
+	rm -f *.brf
+	rm -f *.dvi
+	rm -f *.ent
+	rm -f *.fff
+	rm -f *.ttt
+	rm -f *.upa
+	rm -f *.upb
+	rm -f *.pdfpc
+	@echo "LaTeX auxiliary files cleaned from current directory."
+
 # Clean everything
 clean-all: clean
 	@echo "=== Cleaning all generated files for $(DOCUMENT) ==="
