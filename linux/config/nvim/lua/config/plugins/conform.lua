@@ -22,7 +22,7 @@ return {
                 nix = { "nixpkgs-fmt" },
                 c = { "clang-format" },
                 cpp = { "clang-format" },
-                tex = { "latexindent" },
+                tex = { "tex-fmt" },
                 cmake = { "cmake_format" },
                 sh = { "shfmt" },
                 bash = { "shfmt" },

@@ -30,70 +30,73 @@
 
 \subsection{Mathematical Notation}
 \begin{itemize}
-    \item Vectors: $\vect{v} = (v_1, v_2, \dots, v_n) \in \R^n$
-    \item Matrices: $\mat{A} = [a_{ij}] \in \R^{m \times n}$
-    \item Functions: $f: \R^n \to \R$
+  \item Vectors: $\vect{v} = (v_1, v_2, \dots, v_n) \in \R^n$
+  \item Matrices: $\mat{A} = [a_{ij}] \in \R^{m \times n}$
+  \item Functions: $f: \R^n \to \R$
 \end{itemize}
 
 \subsection{Important Definitions}
 \begin{definition}[Continuity]
-    A function $f: \R \to \R$ is \emph{continuous} at $x_0 \in \R$ if
-    \[
-    \forall \epsilon > 0, \exists \delta > 0 : |x - x_0| < \delta \implies |f(x) - f(x_0)| < \epsilon.
-    \]
+  A function $f: \R \to \R$ is \emph{continuous} at $x_0 \in \R$ if
+  \[
+    \forall \epsilon > 0, \exists \delta > 0 : |x - x_0| < \delta
+    \implies |f(x) - f(x_0)| < \epsilon.
+  \]
 \end{definition}
 
 \section{Main Results}
 
 \subsection{Theorems and Proofs}
 \begin{theorem}[Pythagorean Theorem]
-    In a right triangle with legs $a$ and $b$ and hypotenuse $c$,
-    \[
+  In a right triangle with legs $a$ and $b$ and hypotenuse $c$,
+  \[
     a^2 + b^2 = c^2.
-    \]
+  \]
 \end{theorem}
 
 \begin{proof}
-    The proof follows from Euclidean geometry...
+  The proof follows from Euclidean geometry...
 \end{proof}
 
 \begin{lemma}[Important Inequality]
-    For any $x, y \in \R$,
-    \[
+  For any $x, y \in \R$,
+  \[
     (x + y)^2 \leq 2(x^2 + y^2).
-    \]
+  \]
 \end{lemma}
 
 \subsection{Equations and Alignments}
 Important equation:
 \begin{equation}
-    \label{eq:euler}
-    e^{i\pi} + 1 = 0.
+  \label{eq:euler}
+  e^{i\pi} + 1 = 0.
 \end{equation}
 
 Multiple aligned equations:
 \begin{align}
-    \frac{d}{dx} \sin x &= \cos x, \label{eq:sin} \\
-    \frac{d}{dx} \cos x &= -\sin x, \label{eq:cos} \\
-    \int \sin x \, dx &= -\cos x + C. \label{eq:intsin}
+  \frac{d}{dx} \sin x &= \cos x, \label{eq:sin} \\
+  \frac{d}{dx} \cos x &= -\sin x, \label{eq:cos} \\
+  \int \sin x \, dx &= -\cos x + C. \label{eq:intsin}
 \end{align}
 
 Matrix example:
 \[
-\mat{A} = \begin{pmatrix}
+  \mat{A} =
+  \begin{pmatrix}
     a_{11} & a_{12} & \cdots & a_{1n} \\
     a_{21} & a_{22} & \cdots & a_{2n} \\
     \vdots & \vdots & \ddots & \vdots \\
     a_{m1} & a_{m2} & \cdots & a_{mn}
-\end{pmatrix}
+  \end{pmatrix}
 \]
 
 Piecewise function:
 \[
-f(x) = \begin{cases}
+  f(x) =
+  \begin{cases}
     x^2 & \text{if } x \geq 0, \\
     -x & \text{if } x < 0.
-\end{cases}
+  \end{cases}
 \]
 
 \end{document}

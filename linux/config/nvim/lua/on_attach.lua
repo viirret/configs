@@ -16,7 +16,7 @@ local FORMATTER_AVAILABLE = {
     nix = vim.fn.executable "nixpkgs-fmt" == 1,
     sh = vim.fn.executable "shfmt" == 1,
     cmake = vim.fn.executable "cmake-format" == 1,
-    tex = vim.fn.executable "latexindent" == 1,
+    tex = vim.fn.executable "tex-fmt" == 1,
 }
 
 function M.on_attach(client, bufnr)
