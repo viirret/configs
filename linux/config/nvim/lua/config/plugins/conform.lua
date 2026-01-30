@@ -1,55 +1,14 @@
+local formatters = require "formatters"
+
 return {
     "stevearc/conform.nvim",
     event = { "BufReadPre", "BufNewFile" },
     config = function()
-        require("conform").setup {
-            -- Define your formatters
-            formatters_by_ft = {
-                lua = { "stylua" },
-                python = { "black" },
-                go = { "gofumpt" },
-                javascript = { "prettier" },
-                typescript = { "prettier" },
-                javascriptreact = { "prettier" },
-                typescriptreact = { "prettier" },
-                json = { "prettier" },
-                yaml = { "prettier" },
-                markdown = { "prettier" },
-                html = { "prettier" },
-                css = { "prettier" },
-                scss = { "prettier" },
-                rust = { "rustfmt" },
-                nix = { "nixpkgs-fmt" },
-                c = { "clang-format" },
-                cpp = { "clang-format" },
-                tex = { "tex-fmt" },
-                cmake = { "cmake_format" },
-                sh = { "shfmt" },
-                bash = { "shfmt" },
-                zsh = { "shfmt" },
-            },
+        local formatter_defs = formatters.for_conform()
 
-            -- Formatter configuration
-            formatters = {
-                gofumpt = {
-                    prepend_args = { "-extra" },
-                },
-                stylua = {
-                    prepend_args = {},
-                },
-                prettier = {
-                    prepend_args = {},
-                },
-                black = {
-                    prepend_args = { "--quiet" },
-                },
-                rustfmt = {
-                    prepend_args = { "--edition", "2021" },
-                },
-                clang_format = {
-                    prepend_args = {},
-                },
-            },
+        require("conform").setup {
+            formatters_by_ft = formatter_defs.formatters_by_ft,
+            formatters = formatter_defs.formatters,
 
             -- Format on save
             format_on_save = {

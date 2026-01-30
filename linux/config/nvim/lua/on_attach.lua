@@ -1,30 +1,16 @@
 local lsp_keymaps = require "keys.lsp_keymaps"
+local formatters = require "formatters"
 
 local M = {}
 
-local FORMATTER_AVAILABLE = {
-    lua = vim.fn.executable "stylua" == 1,
-    python = vim.fn.executable "black" == 1,
-    go = vim.fn.executable "gofumpt" == 1,
-    javascript = vim.fn.executable "prettier" == 1,
-    typescript = vim.fn.executable "prettier" == 1,
-    json = vim.fn.executable "prettier" == 1,
-    markdown = vim.fn.executable "prettier" == 1,
-    c = vim.fn.executable "clang-format" == 1,
-    cpp = vim.fn.executable "clang-format" == 1,
-    rust = vim.fn.executable "rustfmt" == 1,
-    nix = vim.fn.executable "nixpkgs-fmt" == 1,
-    sh = vim.fn.executable "shfmt" == 1,
-    cmake = vim.fn.executable "cmake-format" == 1,
-    tex = vim.fn.executable "tex-fmt" == 1,
-}
+local formatter_avainable = formatters.get_available_table()
 
 function M.on_attach(client, bufnr)
     lsp_keymaps.setup(bufnr)
 
     -- Disable LSP formatting for filetypes handled by conform
     local ft = vim.bo[bufnr].filetype
-    if client.supports_method "textDocument/formatting" and FORMATTER_AVAILABLE[ft] then
+    if client.supports_method "textDocument/formatting" and formatter_avainable[ft] then
         client.server_capabilities.documentFormattingProvider = false
         client.server_capabilities.documentRangeFormattingProvider = false
     end
