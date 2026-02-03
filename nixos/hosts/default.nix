@@ -11,7 +11,6 @@
   };
 
   environment.systemPackages = with pkgs; [
-    nixpkgs-fmt
     vim
     wget
     curl

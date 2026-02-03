@@ -37,6 +37,8 @@
       gofumpt
       rustfmt
       shfmt
+      tex-fmt
+      nixpkgs-fmt
     ];
   };
 
