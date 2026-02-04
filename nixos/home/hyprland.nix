@@ -36,7 +36,7 @@ in
         };
       };
 
-      windowrulev2 = [
+      windowrulev = [
         "opacity 0.9 0.8,class:^(${terminal})$"
       ];
 
