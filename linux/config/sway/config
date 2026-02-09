@@ -29,13 +29,13 @@ font pango:FiraCode Nerd Font 10
 for_window [class= "^.*"] border pixel 1
 
 # Update keyboard layout information.
-exec_always --no-startup-id ~/.dotfiles/linux/scripts/keyboard_layout_wayland.sh
+exec_always --no-startup-id ~/configs/scripts/keyboard_layout_wayland.sh
 
 # Update spotify_notifications.
-exec_always --no-startup-id ~/.dotfiles/linux/scripts/spotify_info.sh
+exec_always --no-startup-id ~/configs/scripts/spotify_info.sh
 
 # Laptop battery script.
-exec_always --no-startup-id ~/.dotfiles/linux/scripts/laptop_battery.sh
+exec_always --no-startup-id ~/configs/scripts/laptop_battery.sh
 
 include /etc/sway/config.d/*
 
@@ -55,7 +55,7 @@ bindsym $mod+q kill
 bindsym $mod+d exec --no-startup-id rofi -show drun
 
 # Kill window
-bindsym $mod+Shift+x exec ~/.dotfiles/scripts/swaykill.sh
+bindsym $mod+Shift+x exec ~/configs/scripts/swaykill.sh
 
 # Change focus
 bindsym $mod+h focus left
