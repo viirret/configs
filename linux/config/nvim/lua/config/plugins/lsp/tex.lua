@@ -1,5 +1,5 @@
 -- lua/lsp/latex.lua
-local builder = require "config.plugins.lsp.lspbuilder"
+local builder = require "config.plugins.lspbuilder"
 
 local M = {}
 

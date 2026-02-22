@@ -1,4 +1,4 @@
-local builder = require "config.plugins.lsp.lspbuilder"
+local builder = require "config.plugins.lspbuilder"
 local is_nixos = require("utils.is_nixos").is_nixos
 
 local M = {}
