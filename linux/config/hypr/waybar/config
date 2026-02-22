@@ -1,0 +1,89 @@
+{
+    "layer": "top",
+    "position": "top",
+    "height": 30,
+    "spacing": 4,
+
+    "modules-left": ["hyprland/workspaces"],
+    "modules-center": ["clock"],
+    "modules-right": [
+        "custom/spotify",
+        "pulseaudio",
+        "cpu",
+        "temperature",
+        "memory",
+        "disk",
+        "keyboard-state",
+        "custom/keyboard",
+        "tray"
+    ],
+
+    "hyprland/workspaces": {
+        "format": "{id}"
+    },
+
+    "clock": {
+        "format": "{:%A %d. %B %H:%M:%S}",
+        "interval": 1
+    },
+
+    "cpu": {
+        "format": " {usage}%",
+        "interval": 2
+    },
+
+    "disk": {
+        "format": " {specific_free:.0f}GB",
+        "unit": "GB",
+        "path": "/"
+    },
+
+    "pulseaudio": {
+        "format": "{icon} {volume}%",
+        "format-muted": " muted",
+        "format-icons": {
+            "default": ["", "", ""]
+        },
+        "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
+        "on-scroll-up": "pactl set-sink-volume @DEFAULT_SINK@ +5%",
+        "on-scroll-down": "pactl set-sink-volume @DEFAULT_SINK@ -5%"
+    },
+
+    "temperature": {
+        "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
+        "format": " {temperatureC}°C",
+        "critical-threshold": 80,
+        "format-critical": " {temperatureC}°C"
+    },
+
+    "memory": {
+        "format": " {used:.1f}G",
+        "interval": 2
+    },
+
+    "tray": {
+        "spacing": 8
+    },
+
+    "custom/spotify": {
+        "exec": "cat ~/.local/state/i3status/spotify_info",
+        "interval": 2,
+        "format": "{}",
+        "on-click": "playerctl play-pause --player=spotify"
+    },
+
+    "keyboard-state": {
+        "capslock": true,
+        "format": "{icon}",
+        "format-icons": {
+            "locked": "CAPS",
+            "unlocked": ""
+        }
+    },
+
+    "custom/keyboard": {
+        "exec": "cat ~/.local/state/i3status/keyboard_layout",
+        "interval": 1,
+        "format": " {}"
+    }
+}

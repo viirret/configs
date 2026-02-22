@@ -1,0 +1,60 @@
+* {
+    font-family: monospace;
+    font-size: 13px;
+    min-height: 0;
+}
+
+window#waybar {
+    background-color: rgba(20, 20, 20, 0.9);
+    color: #cdd6f4;
+    border-bottom: 2px solid rgba(100, 100, 120, 0.4);
+}
+
+.modules-left,
+.modules-center,
+.modules-right {
+    margin: 0 4px;
+}
+
+#workspaces button {
+    padding: 0 6px;
+    color: #888;
+    border-radius: 0;
+    border: none;
+    background: transparent;
+}
+
+#workspaces button.active {
+    color: #cdd6f4;
+    border-bottom: 2px solid #cdd6f4;
+}
+
+#workspaces button:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #cdd6f4;
+}
+
+#clock,
+#cpu,
+#disk,
+#custom-spotify,
+#custom-keyboard {
+    padding: 0 10px;
+    color: #cdd6f4;
+}
+
+#cpu {
+    color: #a6e3a1;
+}
+
+#disk {
+    color: #89b4fa;
+}
+
+#custom-keyboard {
+    color: #f38ba8;
+}
+
+#custom-spotify {
+    color: #1ed760;
+}
