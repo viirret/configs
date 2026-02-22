@@ -29,7 +29,7 @@ font pango:FiraCode Nerd Font 10
 for_window [class= "^.*"] border pixel 1
 
 # Update keyboard layout information.
-exec_always --no-startup-id ~/configs/scripts/keyboard_layout_wayland.sh
+exec_always --no-startup-id ~/configs/scripts/keyboard_layout_sway.sh
 
 # Update spotify_notifications.
 exec_always --no-startup-id ~/configs/scripts/spotify_info.sh

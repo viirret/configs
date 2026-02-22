@@ -19,7 +19,7 @@ exec_always "setxkbmap -model pc105 -layout us,fi -variant , -option grp:alt_shi
 exec_always --no-startup-id "picom --config /home/valtteri/.config/picom.conf"
 
 # Update keyboard layout information.
-exec_always --no-startup-id ~/.scripts/keyboard_layout.sh
+exec_always --no-startup-id ~/.scripts/keyboard_layout_x11.sh
 
 # Update spotify_notifications.
 exec_always --no-startup-id ~/.scripts/spotify_info.sh
