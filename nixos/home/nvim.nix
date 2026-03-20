@@ -11,7 +11,7 @@
   programs.neovim = {
     enable = true;
     extraPackages = with pkgs; [
-      # Telescope dependencies
+      tree-sitter
       ripgrep
 
       # LSP servers
