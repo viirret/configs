@@ -4,6 +4,7 @@
   home.packages = with pkgs; [
     # Common
     tree
+    evince
     zip
     unzip
     file
