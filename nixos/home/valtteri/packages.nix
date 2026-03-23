@@ -35,5 +35,8 @@
 
     # Torrent client
     qbittorrent
+
+    # LaTex
+    texliveMedium
   ];
 }
