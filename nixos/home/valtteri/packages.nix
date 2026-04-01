@@ -38,5 +38,8 @@
 
     # LaTex
     texliveMedium
+
+    # Other
+    spotify
   ];
 }
