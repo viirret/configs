@@ -97,6 +97,9 @@ in
         "${modifier} SHIFT,L,movewindow,r"
         "${modifier} SHIFT,K,movewindow,u"
         "${modifier} SHIFT,J,movewindow,d"
+
+        # Screenshot
+        "${modifier},Z,exec,grim -g \"$(slurp)\" ~/Images/screenshot/screenshot-$(date +'%Y-%m-%d_%H-%M-%S').png"
       ];
     };
   };

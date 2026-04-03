@@ -20,6 +20,7 @@
     cmake
     gnumake
     gcc
+    valgrind
 
     # Font
     fira-code
