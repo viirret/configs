@@ -12,8 +12,8 @@ require "opts"
 -- Lazy config
 require "config.lazy"
 
-local clear_lsp_log = require "clear_lsp_log"
-clear_lsp_log.clear_lsp_log()
+-- rotate at 512 KB
+require("lsp_log_rotate").rotate_lsp_log(512)
 
 vim.api.nvim_create_user_command("LspStatus", function()
     local clients = vim.lsp.get_clients { bufnr = 0 }
