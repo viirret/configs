@@ -8,7 +8,7 @@ from colorama import Fore, Style
 # Current user home dir.
 HOME_DIR = os.path.expanduser("~")
 
-DIRECTORIES_TO_SCAN = [ HOME_DIR, os.path.join(HOME_DIR, "Downloads") ]
+DIRECTORIES_TO_SCAN = [HOME_DIR, os.path.join(HOME_DIR, "Downloads")]
 
 # Directories where to move files.
 images = "Images"
@@ -21,45 +21,53 @@ EXTENSION_DIR_MAP = {
     ".jpg": images,
     ".png": images,
     ".gif": images,
+    ".webp": images,
     ".pdf": documents,
     ".mp3": music,
     ".mp4": videos,
-
     ".sh": snippets,
     ".py": snippets,
     ".cc": snippets,
     ".ts": snippets,
-    ".js": snippets
+    ".js": snippets,
+    ".lua": snippets,
+    ".fish": snippets,
 }
 
 PREVIEW_SIZE_LIMIT = 500
 
 ITEMS_TO_IGNORE = [
-    "code", # Own git repos
+    "code",  # Own git repos
     "Backup",
     "Games",
     "Notes",
     "Snippets",
-
     "go",
-
-    "README.md", # .dotfiles
-    "sway.log" # sway
+    "README.md",  # .dotfiles
+    "sway.log",  # sway
 ]
 
 magic_instance = magic.Magic(mime=True)
 
+
 def is_text_file(file_path):
     mime_type = magic_instance.from_file(file_path)
-    return mime_type is not None and mime_type.startswith('text')
+    return mime_type is not None and mime_type.startswith("text")
+
 
 def should_ignore(item):
-    return item.startswith('.') or item in ITEMS_TO_IGNORE
+    return item.startswith(".") or item in ITEMS_TO_IGNORE
+
 
 def get_user_action(file_path):
     print(f"File: {Fore.YELLOW}{file_path}{Style.RESET_ALL}")
-    action = input("What would you like to do? (m: move, d: delete, s: skip): ").strip().lower()
+    action = (
+        input("What would you like to do? (m: move, d: delete, s: skip): ")
+        .strip()
+        .lower()
+    )
     return action
+
 
 def print_file_preview(file_path):
     try:
@@ -73,21 +81,23 @@ def print_file_preview(file_path):
             return
 
         if file_size > PREVIEW_SIZE_LIMIT:
-            with open(file_path, 'r', errors='ignore') as file:
+            with open(file_path, "r", errors="ignore") as file:
                 content = file.read(PREVIEW_SIZE_LIMIT)
                 print(f"Preview (first {PREVIEW_SIZE_LIMIT} characters):\n{content}\n")
         else:
-            with open(file_path, 'r', errors='ignore') as file:
+            with open(file_path, "r", errors="ignore") as file:
                 content = file.read()
                 print(f"Preview:\n{content}\n")
     except Exception as e:
         print(f"An error occurred: {e}")
+
 
 def organize_file(file_path, dest_dir):
     destination_path = os.path.join(HOME_DIR, dest_dir)
     os.makedirs(destination_path, exist_ok=True)
     shutil.move(file_path, destination_path)
     print(f"Moved {file_path} to {destination_path}")
+
 
 def main():
     for directory in DIRECTORIES_TO_SCAN:
@@ -102,16 +112,17 @@ def main():
                 dest_dir = EXTENSION_DIR_MAP.get(extension)
                 print_file_preview(file_path)
                 action = get_user_action(file_path)
-                if action == 'm':
+                if action == "m":
                     organize_file(file_path, dest_dir)
-                elif action == 'd':
+                elif action == "d":
                     os.remove(file_path)
                     print(f"Deleted {file_path}")
-                elif action == 's':
+                elif action == "s":
                     print(f"Skipped {file_path}")
                 else:
                     print("Invalid action. Skipping file")
                 print("")
+
 
 if __name__ == "__main__":
     main()
