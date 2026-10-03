@@ -1,5 +1,40 @@
 local M = {}
 
+-- Default C/C++ formatting rules, used when the project has no .clang-format.
+-- Override the location with $CLANG_FORMAT_DEFAULT.
+local DEFAULT_CLANG_FORMAT = os.getenv "CLANG_FORMAT_DEFAULT"
+    or (vim.fn.stdpath "config" .. "/clang-format-default/.clang-format")
+
+-- Filenames clang-format looks for, in the file's directory and its parents.
+-- The ".clang-format-<tuple>" variants only matter for clang-format's
+-- fuzzing/syntax-only modes, which are not used here.
+local CLANG_FORMAT_CONFIGS = { ".clang-format", "_clang-format" }
+
+-- Mirror clang-format's own config lookup: walk up from the buffer's
+-- directory to the filesystem root looking for a config file.
+local function has_project_clang_format(bufnr)
+    local filename = vim.api.nvim_buf_get_name(bufnr)
+    if filename == "" then
+        return false
+    end
+
+    local dir = vim.fs.dirname(filename)
+    while dir do
+        for _, config_name in ipairs(CLANG_FORMAT_CONFIGS) do
+            if vim.fn.filereadable(dir .. "/" .. config_name) == 1 then
+                return true
+            end
+        end
+        local parent = vim.fs.dirname(dir)
+        if not parent or parent == dir then
+            break
+        end
+        dir = parent
+    end
+
+    return false
+end
+
 -- Centralized formatter definitions
 M.definitions = {
     -- Formatter filetypes
@@ -45,9 +80,16 @@ M.definitions = {
         rustfmt = {
             prepend_args = { "--edition", "2021" },
         },
-        clang_format = {
-            prepend_args = {},
-        },
+        -- clang-format only looks for .clang-format next to the file and its
+        -- parents, so point it at our default when the project has none.
+        -- conform.nvim calls this with the buffer number, which lets the
+        -- decision be made per buffer.
+        ["clang-format"] = function(bufnr)
+            if has_project_clang_format(bufnr) then
+                return {}
+            end
+            return { prepend_args = { "--style=file:" .. DEFAULT_CLANG_FORMAT } }
+        end,
         nixpkgs_fmt = {
             prepend_args = {},
         },
@@ -70,7 +112,7 @@ M.definitions = {
         prettier = "prettier",
         rustfmt = "rustfmt",
         nixpkgs_fmt = "nixpkgs-fmt",
-        clang_format = "clang-format",
+        ["clang-format"] = "clang-format",
         tex_fmt = "tex-fmt",
         cmake_format = "cmake-format",
         shfmt = "shfmt",
