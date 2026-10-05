@@ -25,6 +25,56 @@ local function reset_all_done_to_todo()
     end
 end
 
+local function unfold_all_org()
+    local count = 0
+    for _, tab in ipairs(vim.api.nvim_list_tabpages()) do
+        for _, win in ipairs(vim.api.nvim_tabpage_list_wins(tab)) do
+            local buf = vim.api.nvim_win_get_buf(win)
+            if vim.bo[buf].filetype == "org" then
+                vim.wo[win].foldlevel = 99
+                count = count + 1
+            end
+        end
+    end
+    vim.notify(("Unfolded %d org window(s)"):format(count))
+end
+
+local function warn_if_not_org()
+    if vim.bo.filetype ~= "org" then
+        vim.notify("This command only works in .org files", vim.log.levels.WARN)
+        return true
+    end
+    return false
+end
+
+-- TODO -> DONE, only on the given line range (default: cursor line)
+local function mark_todo_done(first, last)
+    if warn_if_not_org() then
+        return
+    end
+
+    first = first or vim.api.nvim_win_get_cursor(0)[1]
+    last = last or first
+
+    local lines = vim.api.nvim_buf_get_lines(0, first - 1, last, false)
+    local count = 0
+
+    for i, line in ipairs(lines) do
+        local new, n = line:gsub("^(%*+)%s+TODO%f[%W]", "%1 DONE")
+        if n > 0 then
+            lines[i] = new
+            count = count + 1
+        end
+    end
+
+    if count > 0 then
+        vim.api.nvim_buf_set_lines(0, first - 1, last, false, lines)
+        vim.notify(("Marked %d task(s) as DONE"):format(count))
+    else
+        vim.notify "No TODO headline on that line."
+    end
+end
+
 return {
     "nvim-orgmode/orgmode",
     ft = { "org" },
@@ -39,9 +89,35 @@ return {
             group = vim.api.nvim_create_augroup("OrgResetDone", { clear = true }),
             pattern = "org",
             callback = function(args)
+                vim.keymap.set("n", "<leader>rd", function()
+                    mark_todo_done()
+                end, {
+                    buffer = args.buf,
+                    desc = "Orgmode: Mark current TODO as DONE",
+                })
+
+                -- Visual mode: every TODO inside the selection
+                vim.keymap.set("x", "<leader>rd", function()
+                    local a, b = vim.fn.line "v", vim.fn.line "."
+                    if a > b then
+                        a, b = b, a
+                    end
+                    vim.cmd "normal! \27" -- leave visual mode
+                    mark_todo_done(a, b)
+                end, {
+                    buffer = args.buf,
+                    desc = "Orgmode: Mark selected TODOs as DONE",
+                })
+
+                -- Whole file
                 vim.keymap.set("n", "<leader>rt", reset_all_done_to_todo, {
                     buffer = args.buf,
-                    desc = "Orgmode: Reset all DONE tasks to TODO",
+                    desc = "Orgmode: Reset all DONE to TODO",
+                })
+
+                vim.keymap.set("n", "<leader>re", unfold_all_org, {
+                    buffer = args.buf,
+                    desc = "Orgmode: Unfold everything in all org windows",
                 })
             end,
         })
