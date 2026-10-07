@@ -37,3 +37,11 @@ opt.smartindent = true
 
 -- so that `` is visible in markdown files
 opt.conceallevel = 0
+
+-- Keep undo history across editing sessions.
+opt.undofile = true
+
+-- Keep context visible and prevent diagnostic signs from shifting the text.
+opt.scrolloff = 8
+opt.signcolumn = "yes"
+opt.inccommand = "split"

@@ -1,55 +1,30 @@
 local M = {}
 
---- Root_dir finder
+--- Build a native LSP root callback from project markers.
 ---@param patterns string[]
 ---@return function
 function M.make_root_dir(patterns)
-    return function(fname)
-        local root = vim.fs.find(patterns, { upward = true, path = fname })[1]
-        return root and vim.fs.dirname(root) or vim.fn.getcwd()
+    return function(bufnr, on_dir)
+        if vim.bo[bufnr].buftype ~= "" then
+            return
+        end
+        local filename = vim.api.nvim_buf_get_name(bufnr)
+        on_dir(require("utils.root_dir").get_root_dir(filename, patterns))
     end
 end
 
 ---@param opts table
 function M.build(opts)
-    local name = opts.name
-    local cmd = opts.cmd
-    local filetypes = opts.filetypes or {}
-    local settings = opts.settings or {}
-    local capabilities = opts.capabilities
-    local on_attach = opts.on_attach
-    local root_patterns = opts.root_patterns or {}
-    local root_dir_fn = M.make_root_dir(root_patterns)
-
-    vim.lsp.config[name] = {
-        cmd = cmd,
-        capabilities = capabilities,
-        on_attach = on_attach,
-        filetypes = filetypes,
-        root_dir = root_dir_fn,
-        settings = settings,
-    }
-
-    vim.api.nvim_create_autocmd("FileType", {
-        pattern = filetypes,
-        callback = function(args)
-            if vim.api.nvim_win_get_config(vim.fn.bufwinid(args.buf)).relative ~= "" then
-                return
-            end
-            local active = vim.lsp.get_clients { bufnr = args.buf, name = name }
-            if #active == 0 then
-                local root = root_dir_fn(args.file)
-                vim.lsp.start {
-                    name = name,
-                    cmd = cmd,
-                    capabilities = capabilities,
-                    on_attach = on_attach,
-                    root_dir = root,
-                    settings = settings,
-                }
-            end
-        end,
+    vim.lsp.config(opts.name, {
+        cmd = opts.cmd,
+        capabilities = opts.capabilities,
+        on_attach = opts.on_attach,
+        filetypes = opts.filetypes or {},
+        root_dir = opts.root_dir or M.make_root_dir(opts.root_patterns or {}),
+        settings = opts.settings or {},
+        init_options = opts.init_options,
     })
+    vim.lsp.enable(opts.name)
 end
 
 return M

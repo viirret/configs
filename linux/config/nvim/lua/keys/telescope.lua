@@ -1,24 +1,23 @@
 local builtin = require "telescope.builtin"
+local root_dir = require "utils.root_dir"
 
--- Find file (from nvim launch dir)
-vim.keymap.set("n", "<leader>ff", builtin.find_files, { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>ff", function()
+    builtin.find_files { cwd = root_dir.current_project() }
+end, { desc = "Find project files" })
 
--- Grep (from nvim launch dir)
-vim.keymap.set("n", "<leader>fg", builtin.live_grep, { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>fg", function()
+    builtin.live_grep { cwd = root_dir.current_project() }
+end, { desc = "Grep project" })
 
--- Show buffers
-vim.keymap.set("n", "<leader>fb", builtin.buffers, { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>fb", builtin.buffers, { desc = "Find buffers" })
+vim.keymap.set("n", "<leader>fr", builtin.lsp_references, { desc = "Find LSP references" })
+vim.keymap.set("n", "<leader>fh", builtin.help_tags, { desc = "Find help tags" })
 
--- Find references
-vim.keymap.set("n", "<leader>fr", builtin.lsp_references, { noremap = true, silent = true })
-
--- Help tags
-vim.keymap.set("n", "<leader>fh", builtin.help_tags, { noremap = true, silent = true })
-
--- Create a new file
 vim.keymap.set("n", "<leader>fe", function()
+    local root = root_dir.current_project()
     require("telescope").extensions.file_browser.file_browser {
-        path = vim.fn.getcwd(), -- Nvim launch path
+        path = root,
+        cwd = root,
         select_buffer = true,
     }
-end, { noremap = true, silent = true, desc = "Telescope File Explorer" })
+end, { desc = "Browse project files" })

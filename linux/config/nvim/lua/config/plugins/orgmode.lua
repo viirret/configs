@@ -10,8 +10,8 @@ local function reset_all_done_to_todo()
     local modified = false
 
     for i, line in ipairs(lines) do
-        -- Match headlines "* DONE"to "** DONE"
-        if line:match "^(%*+)%s+DONE" then
+        -- Match the whole TODO keyword, including headlines with no title.
+        if line:match "^%*+%s+DONE%s" or line:match "^%*+%s+DONE$" then
             lines[i] = (line:gsub("^(%*+)%s+DONE", "%1 TODO"))
             modified = true
         end
@@ -60,9 +60,8 @@ local function mark_todo_done(first, last)
     local count = 0
 
     for i, line in ipairs(lines) do
-        local new, n = line:gsub("^(%*+)%s+TODO%f[%W]", "%1 DONE")
-        if n > 0 then
-            lines[i] = new
+        if line:match "^%*+%s+TODO%s" or line:match "^%*+%s+TODO$" then
+            lines[i] = line:gsub("^(%*+)%s+TODO", "%1 DONE")
             count = count + 1
         end
     end
@@ -84,43 +83,51 @@ return {
             org_default_notes_file = "~/orgfiles/refile.org",
         }
 
-        -- Buffer-local keymap, set only when an org buffer is opened.
+        local function set_org_keymaps(bufnr)
+            -- Buffer-local keymaps for the org buffer being opened.
+            vim.keymap.set("n", "<leader>rd", function()
+                mark_todo_done()
+            end, {
+                buffer = bufnr,
+                desc = "Orgmode: Mark current TODO as DONE",
+            })
+
+            -- Visual mode: every TODO inside the selection
+            vim.keymap.set("x", "<leader>rd", function()
+                local a, b = vim.fn.line "v", vim.fn.line "."
+                if a > b then
+                    a, b = b, a
+                end
+                vim.cmd "normal! \27" -- leave visual mode
+                mark_todo_done(a, b)
+            end, {
+                buffer = bufnr,
+                desc = "Orgmode: Mark selected TODOs as DONE",
+            })
+
+            -- Whole file
+            vim.keymap.set("n", "<leader>rt", reset_all_done_to_todo, {
+                buffer = bufnr,
+                desc = "Orgmode: Reset all DONE to TODO",
+            })
+
+            vim.keymap.set("n", "<leader>re", unfold_all_org, {
+                buffer = bufnr,
+                desc = "Orgmode: Unfold everything in all org windows",
+            })
+        end
+
         vim.api.nvim_create_autocmd("FileType", {
             group = vim.api.nvim_create_augroup("OrgResetDone", { clear = true }),
             pattern = "org",
             callback = function(args)
-                vim.keymap.set("n", "<leader>rd", function()
-                    mark_todo_done()
-                end, {
-                    buffer = args.buf,
-                    desc = "Orgmode: Mark current TODO as DONE",
-                })
-
-                -- Visual mode: every TODO inside the selection
-                vim.keymap.set("x", "<leader>rd", function()
-                    local a, b = vim.fn.line "v", vim.fn.line "."
-                    if a > b then
-                        a, b = b, a
-                    end
-                    vim.cmd "normal! \27" -- leave visual mode
-                    mark_todo_done(a, b)
-                end, {
-                    buffer = args.buf,
-                    desc = "Orgmode: Mark selected TODOs as DONE",
-                })
-
-                -- Whole file
-                vim.keymap.set("n", "<leader>rt", reset_all_done_to_todo, {
-                    buffer = args.buf,
-                    desc = "Orgmode: Reset all DONE to TODO",
-                })
-
-                vim.keymap.set("n", "<leader>re", unfold_all_org, {
-                    buffer = args.buf,
-                    desc = "Orgmode: Unfold everything in all org windows",
-                })
+                set_org_keymaps(args.buf)
             end,
         })
+
+        if vim.bo.filetype == "org" then
+            set_org_keymaps(vim.api.nvim_get_current_buf())
+        end
 
         -- Enable built-in LSP capabilities for Org.
         vim.lsp.enable "org"

@@ -4,8 +4,8 @@ vim.g.mapleader = " "
 local km = require "keys.map_key"
 
 -- Paste from os clipboard
-km.set("n", "<M-v>", '"+p')
-km.set("n", "<M-V>", '"+P')
+km.set("n", "<M-v>", '"+p', { desc = "Paste clipboard after cursor" })
+km.set("n", "<M-V>", '"+P', { desc = "Paste clipboard before cursor" })
 
 -- Disable arrow keys
 km.set("", "<up>", "<nop>")

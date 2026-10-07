@@ -29,10 +29,17 @@ What's left is the part that actually makes editing good: every language I work 
 | Markdown                  | `markdown`, `markdown.mdx`                                              | `marksman`      | `marksman`                  |
 | CMake                     | `cmake`, `CMakeLists.txt`                                               | `cmake`         | `cmake-language-server`     |
 
+`:LspStatus` shows attached clients, workspace roots, server commands, formatting support, and external formatter availability.
+
+Telescope file search, live grep, and file browsing start at the nearest project marker (such as `.git`, `Cargo.toml`, or `package.json`). Standalone files use their containing directory; unnamed buffers use the current working directory.
+
 ### Formatting
 
-- **conform.nvim** formats on save with a 500 ms timeout and falls back to LSP formatting when no formatter is configured for the filetype.
-- EditorConfig is reloaded before every format, so `.editorconfig` indentation wins over the defaults.
+- **conform.nvim** formats on save with a 500 ms timeout and falls back to LSP formatting when no configured external formatter is available.
+- Neovim’s built-in [EditorConfig support](https://neovim.io/doc/user/plugins/#editorconfig) is reloaded before automatic and manual formatting.
+- `:Format` formats the current buffer; `:Formatters` shows external formatter availability.
+- `:FormatToggle` toggles formatting on save globally; `:FormatToggleBuffer` toggles it for the current buffer. Both switches must be enabled for automatic formatting; manual formatting always remains available.
+- Persistent undo preserves editing history across sessions. The sign column stays visible, scrolling keeps eight lines of context, and substitutions preview in a split.
 
 #### Languages and formatters
 
@@ -41,7 +48,7 @@ What's left is the part that actually makes editing good: every language I work 
 | Lua         | `lua`                           | `stylua`       | options in [`stylua.toml`](stylua.toml)                                                 |
 | Python      | `python`                        | `black`        | `--quiet`                                                                               |
 | Go          | `go`                            | `gofumpt`      | `-extra`                                                                                |
-| Rust        | `rust`                          | `rustfmt`      | `--edition 2021`                                                                        |
+| Rust        | `rust`                          | `rustfmt`      | Edition detected from Cargo.toml (defaults to 2021 for standalone files)                |
 | Nix         | `nix`                           | `nixpkgs-fmt`  | `nixd` also advertises `nixfmt`, but conform wins when `nixpkgs-fmt` is installed       |
 | C / C++     | `c`, `cpp`                      | `clang-format` | bundled default [`style`](clang-format-default/.clang-format) when the project has none |
 | CMake       | `cmake`                         | `cmake-format` | —                                                                                       |
@@ -58,9 +65,12 @@ Leader is `<Space>`.
 
 | Keys                                       | Mode | Action                                                                   |
 | ------------------------------------------ | ---- | ------------------------------------------------------------------------ |
-| `<leader>ff` / `<leader>fg` / `<leader>fb` | n    | Find files / live grep / buffers                                         |
+| `<leader>ff` / `<leader>fg` / `<leader>fb` | n    | Find project files / grep project / buffers                              |
 | `<leader>fr` / `<leader>fh` / `<leader>fe` | n    | LSP references / help tags / file browser                                |
 | `gd` / `gD` / `gr` / `gi` / `gy`           | n    | Definition / declaration / references / implementation / type definition |
+| `<leader>rn`                               | n    | Rename symbol                                                            |
+| `<leader>ih`                               | n    | Toggle inlay hints for the current buffer                                |
+| `<leader>ca`                               | n, x | Code action                                                              |
 | `K`                                        | n    | Hover documentation                                                      |
 | `<leader>e`                                | n    | Show diagnostics in a float                                              |
 | `<C-j>` / `<C-k>`                          | n    | Previous / next buffer                                                   |

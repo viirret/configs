@@ -16,12 +16,5 @@ require "config.lazy"
 require("lsp_log_rotate").rotate_lsp_log(512)
 
 vim.api.nvim_create_user_command("LspStatus", function()
-    local clients = vim.lsp.get_clients { bufnr = 0 }
-    if #clients == 0 then
-        print "No active LSP clients"
-    else
-        for _, client in ipairs(clients) do
-            print("Active LSP: " .. client.name)
-        end
-    end
-end, {})
+    require("utils.lsp_status").show()
+end, { desc = "Show buffer LSP roots, commands, and formatters" })
