@@ -8,3 +8,4 @@ alias ..='cd ..'
 alias c='clear'
 alias vi='nvim'
 alias myip="curl http://ipecho.net/plain; echo"
+alias diffall="git add -N . && git diff"
