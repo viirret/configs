@@ -10,6 +10,7 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("~/configs/scripts/keyboard_layout_hyprland.sh")
 	hl.exec_cmd("~/configs/scripts/spotify_info.sh")
 	hl.exec_cmd("~/configs/scripts/laptop_battery.sh")
+	hl.exec_cmd("alacritty -e ~/configs/scripts/open_startup_file.sh", { workspace = "3 silent" })
 end)
 
 -- Input
