@@ -1,9 +1,10 @@
 return {
     "nvim-treesitter/nvim-treesitter",
-    branch = "master",
+    branch = "main",
+    lazy = false,
     build = ":TSUpdate",
-    opts = {
-        ensure_installed = {
+    config = function()
+        require("nvim-treesitter").install {
             "c",
             "cpp",
             "lua",
@@ -24,13 +25,6 @@ return {
             "markdown_inline",
             "bash",
             "nix",
-        },
-        auto_install = true,
-        highlight = {
-            enable = false,
-        },
-    },
-    config = function(_, opts)
-        require("nvim-treesitter.configs").setup(opts)
+        }
     end,
 }
