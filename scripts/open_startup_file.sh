@@ -3,13 +3,23 @@
 # Change this path to open a different file when Hyprland starts.
 STARTUP_FILE="$HOME/agenda.org"
 
-# Fetch today's vegetarian lunch menu from Ravintola Rentukka (Finnish names),
-# dropping the PAISTOPISTE section.
-RENTUKKA_OUTPUT=$(python3 "$HOME/configs/scripts/rentukka_today.py" --fi --veg 2>/dev/null | awk '
-    /^PAISTOPISTE/ { skip=1; next }
-    skip && /^  - /  { next }
-    { skip=0; print }
-')
+# At boot the network may not be up yet when Hyprland starts, so the fetch can
+# fail. Retry within a time budget instead of silently keeping yesterday's menu.
+fetch_rentukka_output() {
+    timeout 25 python3 "$HOME/configs/scripts/rentukka_today.py" --fi --veg 2>/dev/null | awk '
+        /^PAISTOPISTE/ { skip=1; next }
+        skip && /^  - /  { next }
+        { skip=0; print }
+    '
+}
+
+RENTUKKA_OUTPUT=""
+deadline=$((SECONDS + 120))
+while [ "$SECONDS" -lt "$deadline" ]; do
+    RENTUKKA_OUTPUT=$(fetch_rentukka_output)
+    [ -n "$RENTUKKA_OUTPUT" ] && break
+    sleep 5
+done
 
 if [ -n "$RENTUKKA_OUTPUT" ]; then
     TMPFILE=$(mktemp)
