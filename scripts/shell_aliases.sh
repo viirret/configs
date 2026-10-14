@@ -9,3 +9,4 @@ alias c='clear'
 alias vi='nvim'
 alias myip="curl http://ipecho.net/plain; echo"
 alias diffall="git add -N . && git diff"
+alias patch_submodules='"$HOME/configs/scripts/patch_submodules.sh"'
