@@ -8,6 +8,7 @@
     zip
     unzip
     file
+    eog
 
     # Programming
     go
